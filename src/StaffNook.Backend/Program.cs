@@ -2,10 +2,13 @@ using System.Reflection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Serilog;
 using StaffNook.Backend.Filters;
 using StaffNook.Infrastructure;
 using StaffNook.Infrastructure.Configuration;
 using StaffNook.Infrastructure.Extensions;
+using StaffNook.Infrastructure.Logging;
+using ILogger = StaffNook.Infrastructure.Logging.ILogger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,8 @@ services.ConfigureIdentity();
 services.ConfigureAuthentication(builder.Configuration);
 services.AddControllers(options =>
 {
+    options.Filters.Add(typeof(LoggingActionFilter));
+    options.Filters.Add(typeof(GlobalExceptionFilter));
     options.Filters.Add(typeof(RequestModelValidationFilter));
 });
 services.ConfigureSwagger(Assembly.GetExecutingAssembly().GetName().Name!);
@@ -32,6 +37,10 @@ services.AddFluentValidationAutoValidation(options =>
     options.DisableDataAnnotationsValidation = true;
 });
 
+services.AddScoped<ILogger, ContextualLogger>();
+services.AddScoped<ContextualLogger>();
+services.AddScoped<GlobalExceptionFilter>();
+
 services.AddValidatorsFromAssemblyContaining<ReflectionMarker>();
 
 var app = builder.Build();
@@ -41,6 +50,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+var loggerFactory = app.Services.GetService<ILoggerFactory>()!;
+
+loggerFactory.AddSerilog(DefaultLoggerFactory.LoggerFactory.Value, true);
 
 app.UseHttpsRedirection();
 

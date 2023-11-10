@@ -67,7 +67,7 @@ public class IdentityService : IIdentityService
 
         if (existUser is not null)
         {
-            throw new BusinessException($"Пользователь с логином {dto.UserName} уже существует");
+            throw new DataException($"Пользователь с логином {dto.UserName} уже существует");
         }
 
         var existRole = await _roleManager.FindByNameAsync(dto.Role);

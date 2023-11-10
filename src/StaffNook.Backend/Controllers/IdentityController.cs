@@ -24,23 +24,23 @@ public class IdentityController : ControllerBase
     /// <returns>Результат авторизации</returns>
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login(LoginRequestDto loginRequestDto)
+    public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
     {
         var result = await _identityService.Login(loginRequestDto);
 
         return Ok(result);
     }
-    
+
     [HttpPost]
     [Route("create")]
-    public async Task<IActionResult> Create(CreateUserDto createUserDto)
+    public async Task<IActionResult> Create([FromBody] CreateUserDto createUserDto)
     {
         await _identityService.Create(createUserDto);
 
         return Ok();
     }
-    
-    
+
+
     [HttpPost]
     [Authorize]
     [Route("test")]
