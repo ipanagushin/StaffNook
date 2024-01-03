@@ -1,6 +1,7 @@
 ﻿using StaffNook.Domain.Entities.Base;
 using StaffNook.Domain.Entities.Client;
 using StaffNook.Domain.Entities.Employee;
+using StaffNook.Domain.Entities.Identity;
 using StaffNook.Domain.Entities.Reference;
 
 namespace StaffNook.Domain.Entities.Project;
@@ -18,8 +19,8 @@ public class ProjectEntity : BaseEntity
     /// <summary>
     /// Руководитель проекта
     /// </summary>
-    public Guid ManagerId { get; set; }
-    public virtual EmployeeEntity Manager { get; set; }
+    public Guid UserId { get; set; }
+    public virtual UserEntity User { get; set; }
     
     /// <summary>
     /// Клиент (заказчик)

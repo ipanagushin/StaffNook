@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StaffNook.Domain.Common;
 using StaffNook.Domain.Entities.Attachment;
@@ -11,13 +10,15 @@ using StaffNook.Domain.Entities.Reference;
 
 namespace StaffNook.Infrastructure.Persistence;
 
-public class Context : IdentityDbContext<UserEntity, RoleEntity, Guid>
+public class Context : DbContext
 {
     public Context(DbContextOptions<Context> options) : base(options)
     { }
 
-    DbSet<EmployeeEntity> Employees { get; set; }
-    DbSet<EmployeeWorkingTimeEntity> EmployeeWorkingTimes { get; set; }
+    public DbSet<UserEntity> User { get; set; }
+    public DbSet<RoleEntity> Roles { get; set; }
+    public DbSet<ClaimsRolesEntity> ClaimsRoles { get; set; }
+    public DbSet<WorkingTimeEntity> WorkingTimes { get; set; }
     public DbSet<AttachmentEntity> Attachments { get; set; }
     public DbSet<ClientEntity> Clients { get; set; }
     public DbSet<ProjectTypeEntity> ProjectTypes { get; set; }
@@ -38,8 +39,8 @@ public class Context : IdentityDbContext<UserEntity, RoleEntity, Guid>
             .Property(x => x.Bucket)
             .HasConversion(new EnumToStringConverter<FileStorageBucket>());
 
-        modelBuilder.Entity<EmployeeWorkingTimeEntity>()
-            .HasIndex(x => new { x.Id, x.EmployeeId }).IsUnique();
+        modelBuilder.Entity<WorkingTimeEntity>()
+            .HasIndex(x => new { x.Id, x.UserId }).IsUnique();
 
     }
 

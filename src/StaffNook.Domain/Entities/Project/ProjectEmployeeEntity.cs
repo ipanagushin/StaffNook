@@ -1,5 +1,6 @@
 ﻿using StaffNook.Domain.Entities.Base;
 using StaffNook.Domain.Entities.Employee;
+using StaffNook.Domain.Entities.Identity;
 
 namespace StaffNook.Domain.Entities.Project;
 
@@ -11,8 +12,8 @@ public class ProjectEmployeeEntity : BaseEntity
     /// <summary>
     /// Сотрудник
     /// </summary>
-    public Guid EmployeeId { get; set; }
-    public virtual EmployeeEntity Employee { get; set; }
+    public Guid UserId { get; set; }
+    public virtual UserEntity User { get; set; }
     
     /// <summary>
     /// Роль на проекте

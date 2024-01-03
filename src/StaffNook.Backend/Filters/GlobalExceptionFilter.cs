@@ -32,10 +32,10 @@ namespace StaffNook.Backend.Filters
                     };
                     statusCode = 403;
                     break;
-                case AuthorizationException authenticationException:
+                case AuthorizationException authorizationException:
                     response = new
                     {
-                        authenticationException.Message
+                        authorizationException.Message
                     };
                     statusCode = 400;
                     break;
@@ -103,6 +103,16 @@ namespace StaffNook.Backend.Filters
                         validationException.Message
                     };
                     statusCode = 400;
+                    break;
+                }
+                case UnauthorizedAccessException unauthorizedAccessException:
+                {
+                    statusCode = 401;
+                    break;
+                }
+                case ForbiddenException forbiddenException:
+                {
+                    statusCode = 403;
                     break;
                 }
                 default:

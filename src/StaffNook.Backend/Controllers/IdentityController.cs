@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StaffNook.Domain.Dtos.Employee;
+using StaffNook.Backend.Attributes;
+using StaffNook.Domain.Claims;
 using StaffNook.Domain.Dtos.Identity;
-using StaffNook.Domain.Dtos.User;
-using StaffNook.Domain.Interfaces.Services;
+using StaffNook.Domain.Interfaces.Services.Identity;
 
 namespace StaffNook.Backend.Controllers;
 
@@ -24,30 +24,36 @@ public class IdentityController : ControllerBase
     /// <returns>Результат авторизации</returns>
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
+    public async Task<LoginResponseDto> Login([FromBody] LoginRequestDto loginRequestDto)
     {
-        var result = await _identityService.Login(loginRequestDto);
-
-        return Ok(result);
+        return await _identityService.Login(loginRequestDto);
     }
 
-    [HttpPost]
-    [Route("create")]
-    public async Task<IActionResult> Create([FromBody] CreateUserDto createUserDto)
-    {
-        await _identityService.Create(createUserDto);
-
-        return Ok();
-    }
-
-
+    /// <summary>
+    /// Смена пароля пользователя
+    /// </summary>
+    /// <param name="changePasswordRequestDto"></param>
+    /// <returns></returns>
     [HttpPost]
     [Authorize]
-    [Route("test")]
-    public async Task<IActionResult> Test()
+    [Route("password/change")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequestDto changePasswordRequestDto)
     {
-        // await _identityService.Create();
-
+        await _identityService.ChangePassword(changePasswordRequestDto);
+    
         return Ok();
+    }
+
+    /// <summary>
+    /// Получение информации о текущем пользователе
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    [Authorize]
+    [Route("currentUser")]
+    public async Task<CurrentUserResponseDto> CurrentUser()
+    {
+       return await _identityService.GetCurrentUserInfo();
+       
     }
 }

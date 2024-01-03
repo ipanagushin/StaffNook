@@ -7,7 +7,7 @@ public class LoginValidator : AbstractValidator<LoginRequestDto>
 {
     public LoginValidator()
     {
-        RuleFor(x => x.UserName).NotEmpty();
+        RuleFor(x => x.Login).NotEmpty();
         RuleFor(x => x.Password).NotEmpty();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StaffNook.Domain.Configuration;
 using StaffNook.Domain.Entities.Identity;
+using StaffNook.Infrastructure.Configuration;
+using StaffNook.Infrastructure.Handlers;
 using StaffNook.Infrastructure.Persistence;
 
 namespace StaffNook.Infrastructure.Extensions;
@@ -34,11 +37,7 @@ public static class ConfigureServicesContainer
             throw new Exception("JWT configuration is missing");
         }
 
-        services.AddAuthentication(o =>
-            {
-                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+        services.AddAuthentication("StaffNook")
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
@@ -55,7 +54,7 @@ public static class ConfigureServicesContainer
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfiguration.SecurityKey))
                 };
-            });
+            }).AddScheme<AppAuthenticationSchemeOptions, AuthHandler>("StaffNook", _ => {});;
     }
 
     public static void ConfigureDependencyContainer(this IServiceCollection services, IConfiguration configuration)
@@ -84,38 +83,6 @@ public static class ConfigureServicesContainer
             }
         }
     }
-
-    public static void AddIdentity(this IServiceCollection services)
-    {
-        services.AddIdentity<UserEntity, RoleEntity>()
-            .AddEntityFrameworkStores<Context>()
-            .AddDefaultTokenProviders();
-    }
-
-    public static void ConfigureIdentity(this IServiceCollection services)
-    {
-        services.Configure<IdentityOptions>(options =>
-        {
-            // Password settings
-            options.Password.RequireDigit = true;
-            options.Password.RequiredLength = 6;
-            options.Password.RequireNonAlphanumeric = true;
-            options.Password.RequireUppercase = true;
-            options.Password.RequireLowercase = false;
-
-            // Lockout settings
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-            options.Lockout.MaxFailedAccessAttempts = 10;
-            options.Lockout.AllowedForNewUsers = false;
-
-            // User settings
-            options.User.RequireUniqueEmail = true;
-
-            //SignIn settings
-            options.SignIn.RequireConfirmedEmail = false;
-        });
-    }
-
 
     public static void ConfigureSwagger(this IServiceCollection services, string assemblyName)
     {

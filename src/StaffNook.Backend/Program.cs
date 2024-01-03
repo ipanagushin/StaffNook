@@ -2,6 +2,7 @@ using System.Reflection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Newtonsoft.Json.Converters;
 using Serilog;
 using StaffNook.Backend.Filters;
 using StaffNook.Infrastructure;
@@ -19,8 +20,6 @@ var services = builder.Services;
 
 services.ConfigureDbContext(builder.Configuration);
 services.ConfigureDependencyContainer(builder.Configuration);
-services.AddIdentity();
-services.ConfigureIdentity();
 services.ConfigureAuthentication(builder.Configuration);
 services.AddControllers(options =>
 {
@@ -43,6 +42,18 @@ services.AddScoped<GlobalExceptionFilter>();
 
 services.AddValidatorsFromAssemblyContaining<ReflectionMarker>();
 
+services.AddCors(o =>
+{
+    o.AddPolicy("any", builder =>
+    {
+        builder
+            .AllowCredentials()
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .SetIsOriginAllowed(_ => true);
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -56,6 +67,8 @@ var loggerFactory = app.Services.GetService<ILoggerFactory>()!;
 loggerFactory.AddSerilog(DefaultLoggerFactory.LoggerFactory.Value, true);
 
 app.UseHttpsRedirection();
+
+app.UseCors("any");
 
 app.UseAuthorization();
 

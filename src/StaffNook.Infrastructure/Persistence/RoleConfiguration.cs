@@ -14,13 +14,11 @@ public class RoleConfiguration : IEntityTypeConfiguration<RoleEntity>
             {
                 Id = Guid.Parse(IdentifierConstants.UserRoleId),
                 Name = IdentityRoles.User,
-                NormalizedName = IdentityRoles.User.ToUpper()
             },
             new RoleEntity
             {
                 Id = Guid.Parse(IdentifierConstants.AdminRoleId),
                 Name = IdentityRoles.Administrator,
-                NormalizedName = IdentityRoles.Administrator.ToUpper()
             });
     }
 }

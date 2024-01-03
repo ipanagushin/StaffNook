@@ -1,4 +1,5 @@
 ﻿using StaffNook.Domain.Entities.Base;
+using StaffNook.Domain.Entities.Identity;
 using StaffNook.Domain.Entities.Project;
 
 namespace StaffNook.Domain.Entities.Employee;
@@ -6,13 +7,13 @@ namespace StaffNook.Domain.Entities.Employee;
 /// <summary>
 /// Отчет о затраченном времени сотрудником
 /// </summary>
-public class EmployeeWorkingTimeEntity : BaseEntity
+public class WorkingTimeEntity : BaseEntity
 {
     /// <summary>
     /// Сотрудник
     /// </summary>
-    public Guid EmployeeId { get; set; }
-    public virtual EmployeeEntity Employee { get; set; }
+    public Guid UserId { get; set; }
+    public virtual UserEntity User { get; set; }
     
     /// <summary>
     /// Проект

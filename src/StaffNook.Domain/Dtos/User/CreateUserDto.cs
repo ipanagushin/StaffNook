@@ -3,14 +3,24 @@
 public class CreateUserDto
 {
     /// <summary>
-    /// Логин
+    /// Имя
     /// </summary>
-    public string UserName { get; set; }
+    public string FirstName { get; set; }
+        
+    /// <summary>
+    /// Фамилия
+    /// </summary>
+    public string LastName { get; set; }
     
     /// <summary>
-    /// Email
+    /// Отчество
     /// </summary>
-    public string Email { get; set; }
+    public string MiddleName { get; set; }
+    
+    /// <summary>
+    /// Логин
+    /// </summary>
+    public string Login { get; set; }
     
     /// <summary>
     /// Пароль
@@ -18,12 +28,22 @@ public class CreateUserDto
     public string Password { get; set; }
     
     /// <summary>
-    /// Роль
+    /// Почта
     /// </summary>
-    public string Role { get; set; }
+    public string Email { get; set; }
+        
+    /// <summary>
+    /// Номер телефона
+    /// </summary>
+    public string PhoneNumber { get; set; }
     
     /// <summary>
-    /// Клеймы для пользователя
+    /// Вложение (фото пользователя)
     /// </summary>
-    public string[] Claims { get; set; }
+    public Guid AttachmentId { get; set; }
+    
+    /// <summary>
+    /// Роль
+    /// </summary>
+    public Guid RoleId { get; set; }
 }
