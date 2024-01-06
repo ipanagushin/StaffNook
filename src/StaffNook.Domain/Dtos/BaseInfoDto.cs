@@ -10,12 +10,12 @@ public class BaseInfoDto
     /// <summary>
     /// Дата создания
     /// </summary>
-    public DateTime CreateDate { get; set; }
+    public DateTime CreatedAt { get; set; }
     
     /// <summary>
     /// Дата обновления
     /// </summary>
-    public DateTime UpdateDate { get; set; }
+    public DateTime UpdatedAt { get; set; }
     
     /// <summary>
     /// Архивная запись

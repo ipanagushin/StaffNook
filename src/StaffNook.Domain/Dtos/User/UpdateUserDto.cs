@@ -2,7 +2,7 @@
 
 namespace StaffNook.Domain.Dtos.User;
 
-public class CreateUserDto
+public class UpdateUserDto
 {
     /// <summary>
     /// Имя
@@ -23,11 +23,6 @@ public class CreateUserDto
     /// Логин
     /// </summary>
     public string Login { get; set; }
-    
-    /// <summary>
-    /// Пароль
-    /// </summary>
-    public string Password { get; set; }
     
     /// <summary>
     /// Почта

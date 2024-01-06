@@ -31,6 +31,8 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
 
     public async Task<TEntity> Insert(TEntity data, CancellationToken cancellationToken = default)
     {
+        data.CreatedAt = DateTime.UtcNow;
+        data.UpdatedAt = DateTime.UtcNow;
         var result =  await GetDataSet().AddAsync(data, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         return result.Entity;
@@ -38,7 +40,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
 
     public async Task<TEntity> Update(TEntity data, CancellationToken cancellationToken = default)
     {
-        data.UpdateDate = DateTime.UtcNow;
+        data.UpdatedAt = DateTime.UtcNow;
         var result = GetDataSet().Update(data);
         await _context.SaveChangesAsync(cancellationToken);
         return result.Entity;

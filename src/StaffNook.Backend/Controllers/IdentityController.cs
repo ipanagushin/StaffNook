@@ -54,6 +54,5 @@ public class IdentityController : ControllerBase
     public async Task<CurrentUserResponseDto> CurrentUser()
     {
        return await _identityService.GetCurrentUserInfo();
-       
     }
 }

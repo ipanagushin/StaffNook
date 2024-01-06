@@ -31,7 +31,10 @@ public static class FileStorageConverter
             Name = attachment.UniqueFileName,
             Path = attachment.Path,
             BucketName = GetBucketName(attachment.Bucket),
-            PreviewUrl = AppConfiguration.FileStorage.PreviewUrl
+            PreviewUrl = GetPreviewUrlString(attachment)
         };
     }
+    
+    private static string GetPreviewUrlString(AttachmentEntity attachment) =>
+        $"{AppConfiguration.FileStorage.PreviewUrl}/{attachment.Bucket.ToString().ToLower()}/{attachment.Path}/{attachment.UniqueFileName}";
 }

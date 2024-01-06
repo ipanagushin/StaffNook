@@ -7,11 +7,11 @@ public class BaseEntity
     /// </summary>
     public Guid Id { get; set; }
 
-    public DateTime CreateDate { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public Guid? CreatorId { get; set; }
 
     public bool IsArchived { get; set; }
 
-    public DateTime? UpdateDate { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }

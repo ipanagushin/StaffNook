@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StaffNook.Backend.Attributes;
+using StaffNook.Domain.Claims;
 using StaffNook.Domain.Dtos;
 using StaffNook.Domain.Dtos.User;
 using StaffNook.Domain.Filters;
@@ -22,9 +24,25 @@ public class UserController : ControllerBase
     /// <param name="createUserDto"></param>
     /// <returns></returns>
     [HttpPost]
+    [AuthClaim(ClaimList.CreateUser)]
     public async Task<IActionResult> Create([FromBody] CreateUserDto createUserDto)
     {
         await _userService.Create(createUserDto);
+        return Ok();
+    }
+
+    /// <summary>
+    /// Обновление пользователя
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="updateUserDto"></param>
+    /// <param name="createUserDto"></param>
+    /// <returns></returns>
+    [HttpPut]
+    [Route("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUserDto updateUserDto)
+    {
+        await _userService.Update(id, updateUserDto);
         return Ok();
     }
     

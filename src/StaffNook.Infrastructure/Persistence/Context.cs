@@ -13,7 +13,9 @@ namespace StaffNook.Infrastructure.Persistence;
 public class Context : DbContext
 {
     public Context(DbContextOptions<Context> options) : base(options)
-    { }
+    {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+    }
 
     public DbSet<UserEntity> User { get; set; }
     public DbSet<RoleEntity> Roles { get; set; }

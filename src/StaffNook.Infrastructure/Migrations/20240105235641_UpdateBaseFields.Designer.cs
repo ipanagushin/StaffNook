@@ -12,8 +12,8 @@ using StaffNook.Infrastructure.Persistence;
 namespace StaffNook.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231112193817_Init")]
-    partial class Init
+    [Migration("20240105235641_UpdateBaseFields")]
+    partial class UpdateBaseFields
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,17 +38,11 @@ namespace StaffNook.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
@@ -59,8 +53,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<string>("UniqueFileName")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -73,14 +67,11 @@ namespace StaffNook.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
@@ -91,8 +82,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<string>("ShortName")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -105,14 +96,11 @@ namespace StaffNook.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -126,8 +114,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<double>("Time")
                         .HasColumnType("double precision");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -153,14 +141,11 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<string>("Claim")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
@@ -168,8 +153,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -184,14 +169,11 @@ namespace StaffNook.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
@@ -199,8 +181,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -210,18 +192,16 @@ namespace StaffNook.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("cb027da7-62e3-4678-859b-ffdb92664c78"),
-                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsArchived = false,
-                            Name = "User",
-                            UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "User"
                         },
                         new
                         {
                             Id = new Guid("a3ee775e-6333-4366-9ab4-28ba5b20a2ba"),
-                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsArchived = false,
-                            Name = "Administrator",
-                            UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Administrator"
                         });
                 });
 
@@ -231,23 +211,17 @@ namespace StaffNook.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("AttachmentEntityId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid?>("AttachmentId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
@@ -282,12 +256,12 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<string>("Salt")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AttachmentEntityId");
+                    b.HasIndex("AttachmentId");
 
                     b.HasIndex("RoleId");
 
@@ -303,14 +277,11 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<string>("AdditionalInformation")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("EmailAddress")
                         .HasColumnType("text");
@@ -327,8 +298,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -343,14 +314,11 @@ namespace StaffNook.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
@@ -361,8 +329,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<Guid>("ProjectRoleId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -387,14 +355,11 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateOnly>("EndDateDate")
                         .HasColumnType("date");
@@ -411,8 +376,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -434,14 +399,11 @@ namespace StaffNook.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<double>("HourlyFee")
                         .HasColumnType("double precision");
@@ -455,8 +417,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -471,14 +433,11 @@ namespace StaffNook.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
@@ -486,8 +445,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -516,7 +475,7 @@ namespace StaffNook.Infrastructure.Migrations
             modelBuilder.Entity("StaffNook.Domain.Entities.Identity.ClaimsRolesEntity", b =>
                 {
                     b.HasOne("StaffNook.Domain.Entities.Identity.RoleEntity", "Role")
-                        .WithMany()
+                        .WithMany("RoleClaims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -526,9 +485,9 @@ namespace StaffNook.Infrastructure.Migrations
 
             modelBuilder.Entity("StaffNook.Domain.Entities.Identity.UserEntity", b =>
                 {
-                    b.HasOne("StaffNook.Domain.Entities.Attachment.AttachmentEntity", "AttachmentEntity")
+                    b.HasOne("StaffNook.Domain.Entities.Attachment.AttachmentEntity", "Attachment")
                         .WithMany()
-                        .HasForeignKey("AttachmentEntityId");
+                        .HasForeignKey("AttachmentId");
 
                     b.HasOne("StaffNook.Domain.Entities.Identity.RoleEntity", "Role")
                         .WithMany()
@@ -536,7 +495,7 @@ namespace StaffNook.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AttachmentEntity");
+                    b.Navigation("Attachment");
 
                     b.Navigation("Role");
                 });
@@ -620,6 +579,11 @@ namespace StaffNook.Infrastructure.Migrations
             modelBuilder.Entity("StaffNook.Domain.Entities.Client.ClientEntity", b =>
                 {
                     b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("StaffNook.Domain.Entities.Identity.RoleEntity", b =>
+                {
+                    b.Navigation("RoleClaims");
                 });
 
             modelBuilder.Entity("StaffNook.Domain.Entities.Identity.UserEntity", b =>

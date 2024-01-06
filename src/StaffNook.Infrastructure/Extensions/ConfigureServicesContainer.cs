@@ -9,8 +9,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StaffNook.Domain.Configuration;
 using StaffNook.Domain.Entities.Identity;
+using StaffNook.Domain.Interfaces.Commands;
 using StaffNook.Infrastructure.Configuration;
 using StaffNook.Infrastructure.Handlers;
+using StaffNook.Infrastructure.Implementations.Commands;
 using StaffNook.Infrastructure.Persistence;
 
 namespace StaffNook.Infrastructure.Extensions;
@@ -82,6 +84,8 @@ public static class ConfigureServicesContainer
                 services.Add(new ServiceDescriptor(interfaceType, appService, ServiceLifetime.Scoped));
             }
         }
+
+        // services.AddScoped<IMoveAttachmentCommand, MoveAttachmentCommand>();
     }
 
     public static void ConfigureSwagger(this IServiceCollection services, string assemblyName)

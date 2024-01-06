@@ -71,11 +71,14 @@ public class IdentityService : IIdentityService
         {
             throw NotFoundException.With<UserEntity>(requestDto.UserId);
         }
-        
-        var isVerify = _hashService.VerifyPassword(requestDto.CurrentPassword, user.Hash, user.Salt);
-        if (!isVerify)
+
+        if (!_currentUserService.User.IsAdmin)
         {
-            throw new ValidationException("Текущий пароль введён не верно");
+            var isVerify = _hashService.VerifyPassword(requestDto.CurrentPassword, user.Hash, user.Salt);
+            if (!isVerify)
+            {
+                throw new ValidationException("Текущий пароль введён не верно");
+            }
         }
         
         var (hash, salt) = _hashService.GenerateHash(requestDto.NewPassword);

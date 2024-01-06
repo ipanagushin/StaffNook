@@ -11,5 +11,6 @@ public class UserInfoDto
     public string MiddleName { get; set; }
     public Guid RoleId { get; set; }
     public string Email { get; set; }
+    public DateTime DateOfBirth { get; set; }
     public FileDto Attachment { get; set; }
 }

@@ -12,7 +12,10 @@ public class UserProfile : Profile
 {
     public UserProfile()
     {
-        CreateMap<CreateUserDto, UserEntity>();
+        CreateMap<CreateUserDto, UserEntity>()
+            .ForMember(x=> x.Attachment, opt=> opt.Ignore());
+        CreateMap<UpdateUserDto, UserEntity>()
+            .ForMember(x=> x.Attachment, opt=> opt.Ignore());
         CreateMap<UserEntity, UserInfoDto>()
             .ForMember(dest => dest.Attachment,
                 opt => 

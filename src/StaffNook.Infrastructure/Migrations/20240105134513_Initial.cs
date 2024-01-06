@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace StaffNook.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,8 +25,7 @@ namespace StaffNook.Infrastructure.Migrations
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsArchived = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,8 +42,7 @@ namespace StaffNook.Infrastructure.Migrations
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsArchived = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,8 +57,7 @@ namespace StaffNook.Infrastructure.Migrations
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsArchived = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -77,8 +74,7 @@ namespace StaffNook.Infrastructure.Migrations
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsArchived = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -95,8 +91,7 @@ namespace StaffNook.Infrastructure.Migrations
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsArchived = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -124,21 +119,19 @@ namespace StaffNook.Infrastructure.Migrations
                     Salt = table.Column<string>(type: "text", nullable: true),
                     DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     AttachmentId = table.Column<Guid>(type: "uuid", nullable: true),
-                    AttachmentEntityId = table.Column<Guid>(type: "uuid", nullable: true),
                     HourlyFee = table.Column<double>(type: "double precision", nullable: false),
                     RoleId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsArchived = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_Attachments_AttachmentEntityId",
-                        column: x => x.AttachmentEntityId,
+                        name: "FK_User_Attachments_AttachmentId",
+                        column: x => x.AttachmentId,
                         principalTable: "Attachments",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -163,8 +156,7 @@ namespace StaffNook.Infrastructure.Migrations
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsArchived = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -202,8 +194,7 @@ namespace StaffNook.Infrastructure.Migrations
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsArchived = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -227,8 +218,7 @@ namespace StaffNook.Infrastructure.Migrations
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsArchived = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -253,8 +243,7 @@ namespace StaffNook.Infrastructure.Migrations
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsArchived = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -284,8 +273,7 @@ namespace StaffNook.Infrastructure.Migrations
                     CreateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
                     IsArchived = table.Column<bool>(type: "boolean", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    UpdateDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -312,11 +300,11 @@ namespace StaffNook.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                columns: new[] { "Id", "CreateDate", "CreatorId", "DeleteDate", "IsArchived", "Name", "UpdateDate" },
+                columns: new[] { "Id", "CreateDate", "CreatorId", "IsArchived", "Name", "UpdateDate" },
                 values: new object[,]
                 {
-                    { new Guid("a3ee775e-6333-4366-9ab4-28ba5b20a2ba"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, "Administrator", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { new Guid("cb027da7-62e3-4678-859b-ffdb92664c78"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, false, "User", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { new Guid("a3ee775e-6333-4366-9ab4-28ba5b20a2ba"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "Administrator", null },
+                    { new Guid("cb027da7-62e3-4678-859b-ffdb92664c78"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, "User", null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -365,9 +353,9 @@ namespace StaffNook.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_AttachmentEntityId",
+                name: "IX_User_AttachmentId",
                 table: "User",
-                column: "AttachmentEntityId");
+                column: "AttachmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_RoleId",
