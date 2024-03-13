@@ -5,17 +5,24 @@ namespace StaffNook.Domain.Dtos.User;
 public class ShortUserInfoDto
 {
     public Guid Id { get; set; }
-    public string Login { get; set; }
-    public string LastName { get; set; }
-    public string FirstName { get; set; }
-    public string MiddleName { get; set; }
-    public Guid RoleId { get; set; }
-    public string Email { get; set; }
     
     /// <summary>
-    /// Вложение (фото аватарка)
+    /// ФИО
     /// </summary>
-    public Guid AttachmentId { get; set; }
+    public string FullName { get; set; }
     
+    /// <summary>
+    /// Специальность
+    /// </summary>
+    public string SpecialityName { get; set; }
+    
+    /// <summary>
+    /// Дата приема
+    /// </summary>
+    public DateTime EmploymentDate { get; set; }
+    
+    /// <summary>
+    /// Аватар
+    /// </summary>
     public FileDto Attachment { get; set; }
 }

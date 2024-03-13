@@ -5,6 +5,7 @@ using StaffNook.Domain.Entities.Attachment;
 using StaffNook.Domain.Entities.Client;
 using StaffNook.Domain.Entities.Employee;
 using StaffNook.Domain.Entities.Identity;
+using StaffNook.Domain.Entities.News;
 using StaffNook.Domain.Entities.Project;
 using StaffNook.Domain.Entities.Reference;
 
@@ -18,12 +19,14 @@ public class Context : DbContext
     }
 
     public DbSet<UserEntity> User { get; set; }
+    public DbSet<NewsEntity> News { get; set; }
     public DbSet<RoleEntity> Roles { get; set; }
     public DbSet<ClaimsRolesEntity> ClaimsRoles { get; set; }
     public DbSet<WorkingTimeEntity> WorkingTimes { get; set; }
     public DbSet<AttachmentEntity> Attachments { get; set; }
     public DbSet<ClientEntity> Clients { get; set; }
     public DbSet<ProjectTypeEntity> ProjectTypes { get; set; }
+    public DbSet<SpecialityEntity> Specialities { get; set; }
     public DbSet<ProjectRoleEntity> ProjectRoles { get; set; }
     public DbSet<ProjectEntity> Projects { get; set; }
     public DbSet<ProjectEmployeeEntity> ProjectEmployees { get; set; }

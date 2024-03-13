@@ -4,6 +4,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using Serilog;
 using StaffNook.Backend.Filters;
 using StaffNook.Domain.Interfaces.Commands;
@@ -25,15 +26,21 @@ services.ConfigureDbContext(builder.Configuration);
 services.ConfigureDependencyContainer(builder.Configuration);
 services.ConfigureAuthentication(builder.Configuration);
 services.AddControllers(options =>
-{
-    options.Filters.Add(typeof(LoggingActionFilter));
-    options.Filters.Add(typeof(GlobalExceptionFilter));
-    options.Filters.Add(typeof(RequestModelValidationFilter));
-}).AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-    options.JsonSerializerOptions.Converters.Add (new JsonStringEnumConverter ());
-});
+    {
+        options.Filters.Add(typeof(LoggingActionFilter));
+        options.Filters.Add(typeof(GlobalExceptionFilter));
+        options.Filters.Add(typeof(RequestModelValidationFilter));
+    })
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.Converters.Add(new IsoDateTimeConverter()
+        {
+            DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffZ"
+        });
+
+        // options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+        options.SerializerSettings.Converters.Add(new StringEnumConverter { AllowIntegerValues = false });
+    });
 
 services.ConfigureSwagger(Assembly.GetExecutingAssembly().GetName().Name!);
 services.AddAutoMapper(Assembly.GetExecutingAssembly());

@@ -57,10 +57,6 @@ public class UserController : ControllerBase
         return await _userService.GetById(userId);
     }
     
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     [HttpGet]
     [Route("list")]
     public async Task<IEnumerable<UserInfoDto>> GetUsers()
@@ -70,12 +66,19 @@ public class UserController : ControllerBase
     
     [HttpPost]
     [Route("filter")]
-    public async Task<PaginationResult<UserInfoDto>> GetByPageFilter()
+    public async Task<PaginationResult<UserInfoDto>> GetAdminByPageFilter()
     {
-        return await _userService.GetByPageFilter(new UserPageFilter()
+        return await _userService.GetAdminByPageFilter(new UserPageFilter()
         {
             PageNumber = 1,
             PageSize = 10
         });
+    }
+    
+    [HttpPost]
+    [Route("employments")]
+    public async Task<PaginationResult<ShortUserInfoDto>> GetByPageFilter([FromBody] UserPageFilter filter)
+    {
+        return await _userService.GetByPageFilter(filter);
     }
 }

@@ -19,8 +19,8 @@ public class CreateUserValidator : AbstractValidator<CreateUserDto>
             .Must(StringValidationHelper.IsValidEmailAddress)
             .WithMessage("Неверный формат почты");
         RuleFor(x => x.PhoneNumber)
-            .NotEmpty()
-            .Must(StringValidationHelper.IsValidNumber)
-            .WithMessage("Неверный формат номера телефона");
+            .NotEmpty();
+            // .Must(StringValidationHelper.IsValidNumber)
+            // .WithMessage("Неверный формат номера телефона");
     }
 }

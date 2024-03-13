@@ -7,6 +7,7 @@ using StaffNook.Domain.Claims;
 using StaffNook.Domain.Dtos.Identity;
 using StaffNook.Domain.Entities.Identity;
 using StaffNook.Domain.Interfaces.Repositories;
+using StaffNook.Domain.Interfaces.Services;
 using StaffNook.Domain.Interfaces.Services.Identity;
 using StaffNook.Infrastructure.Configuration;
 using StaffNook.Infrastructure.Exceptions;
@@ -20,17 +21,20 @@ public class IdentityService : IIdentityService
     private readonly IHashService _hashService;
     private readonly IClaimsRolesRepository _claimsRolesRepository;
     private readonly ICurrentUserService _currentUserService;
+    private readonly IFileStorageService _fileStorageService;
 
     public IdentityService(
         IUserRepository userRepository,
         IHashService hashService,
         IClaimsRolesRepository claimsRolesRepository,
-        ICurrentUserService currentUserService)
+        ICurrentUserService currentUserService, 
+        IFileStorageService fileStorageService)
     {
         _userRepository = userRepository;
         _hashService = hashService;
         _claimsRolesRepository = claimsRolesRepository;
         _currentUserService = currentUserService;
+        _fileStorageService = fileStorageService;
     }
 
     public async Task<LoginResponseDto> Login(LoginRequestDto requestDto, CancellationToken cancellationToken = default)
@@ -97,16 +101,23 @@ public class IdentityService : IIdentityService
         {
             throw new UnauthorizedAccessException();
         }
-
-        return new CurrentUserResponseDto
+        
+        var result = new CurrentUserResponseDto
         {
             Id = user.Id,
             Login = user.Login,
             Email = user.Email,
             RoleId = user.RoleId,
             FullName = user.FullName,
-            IsAdmin = user.RoleId.ToString() == IdentifierConstants.AdminRoleId
+            IsAdmin = user.RoleId.ToString() == IdentifierConstants.AdminRoleId,
         };
+        
+        if (user.AttachmentId is not null)
+        {
+            result.AvatarLink = await _fileStorageService.GetPreviewUrl(user.AttachmentId.Value);
+        }
+
+        return result;
     }
 
     private static string GetAuthToken(UserEntity userEntity, IEnumerable<ClaimsRolesEntity> roleClaims)

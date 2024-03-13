@@ -13,13 +13,22 @@ public class UserProfile : Profile
     public UserProfile()
     {
         CreateMap<CreateUserDto, UserEntity>()
-            .ForMember(x=> x.Attachment, opt=> opt.Ignore());
+            .ForMember(x => x.Attachment, opt => opt.Ignore());
         CreateMap<UpdateUserDto, UserEntity>()
-            .ForMember(x=> x.Attachment, opt=> opt.Ignore());
+            .ForMember(x => x.Attachment, opt => opt.Ignore());
         CreateMap<UserEntity, UserInfoDto>()
             .ForMember(dest => dest.Attachment,
-                opt => 
+                opt =>
                     opt.MapFrom(src => FileStorageConverter.FileDtoFromAttachment(src.Attachment)));
+        CreateMap<UserEntity, ShortUserInfoDto>()
+            .ForMember(dest => dest.FullName,
+                opt => opt.MapFrom(src => src.FullName))
+            .ForMember(dest => dest.SpecialityName,
+                opt => opt.MapFrom(src => src.Speciality.Name))
+            .ForMember(dest => dest.Attachment,
+                opt =>
+                    opt.MapFrom(src => FileStorageConverter.FileDtoFromAttachment(src.Attachment)));
+
         // CreateMap<UserEntity, CurrentUserResponseDto>()
         //     .ForMember(x=>x.);
     }

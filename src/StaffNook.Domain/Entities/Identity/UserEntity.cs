@@ -2,6 +2,7 @@
 using StaffNook.Domain.Entities.Attachment;
 using StaffNook.Domain.Entities.Base;
 using StaffNook.Domain.Entities.Employee;
+using StaffNook.Domain.Entities.Reference;
 
 namespace StaffNook.Domain.Entities.Identity;
 
@@ -53,10 +54,21 @@ public class UserEntity : BaseEntity
     public DateTime DateOfBirth { get; set; }
     
     /// <summary>
+    /// Дата приема
+    /// </summary>
+    public DateTime EmploymentDate { get; set; }
+    
+    /// <summary>
     /// Вложение (фото пользователя)
     /// </summary>
     public Guid? AttachmentId { get; set; }
     public virtual AttachmentEntity Attachment { get; set; }
+    
+    /// <summary>
+    /// Специальность
+    /// </summary>
+    public Guid? SpecialityId { get; set; }
+    public virtual SpecialityEntity Speciality { get; set; }
     
     /// <summary>
     /// Ставка за час

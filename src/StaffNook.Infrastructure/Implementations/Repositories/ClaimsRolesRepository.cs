@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StaffNook.Domain.Entities.Identity;
 using StaffNook.Domain.Interfaces.Repositories;
+using StaffNook.Domain.Interfaces.Services.Identity;
 using StaffNook.Infrastructure.Persistence;
 
 namespace StaffNook.Infrastructure.Implementations.Repositories;
 
 public class ClaimsRolesRepository : Repository<ClaimsRolesEntity>, IClaimsRolesRepository
 {
-    public ClaimsRolesRepository(Context context) : base(context)
+    public ClaimsRolesRepository(Context context, ICurrentUserService currentUserService) : base(context, currentUserService)
     {
     }
     

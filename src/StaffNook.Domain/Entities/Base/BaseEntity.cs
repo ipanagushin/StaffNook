@@ -1,4 +1,7 @@
-﻿namespace StaffNook.Domain.Entities.Base;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using StaffNook.Domain.Entities.Identity;
+
+namespace StaffNook.Domain.Entities.Base;
 
 public class BaseEntity
 {
@@ -10,6 +13,8 @@ public class BaseEntity
     public DateTime CreatedAt { get; set; }
 
     public Guid? CreatorId { get; set; }
+    [NotMapped]
+    public virtual UserEntity Creator { get; set; }
 
     public bool IsArchived { get; set; }
 

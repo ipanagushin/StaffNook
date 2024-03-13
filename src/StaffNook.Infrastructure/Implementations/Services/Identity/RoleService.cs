@@ -19,7 +19,7 @@ public class RoleService : IRoleService
         _roleRepository = roleRepository;
         _mapper = mapper;
     }
-    
+
     public async Task<RoleInfoDto> GetById(Guid id, CancellationToken cancellationToken = default)
     {
         var roleEntity = await _roleRepository.GetById(id, cancellationToken);
@@ -33,7 +33,7 @@ public class RoleService : IRoleService
 
     public async Task<IEnumerable<RoleInfoDto>> GetAll(CancellationToken cancellationToken = default)
     {
-        var roleEntities = await _roleRepository.GetList(cancellationToken);
+        var roleEntities = await _roleRepository.GetList(x => !x.IsArchived, cancellationToken);
         return _mapper.Map<IEnumerable<RoleEntity>, IEnumerable<RoleInfoDto>>(roleEntities);
     }
 
@@ -44,7 +44,7 @@ public class RoleService : IRoleService
         {
             throw NotFoundException.With<RoleEntity>(id);
         }
-        
+
         throw new NotImplementedException();
     }
 

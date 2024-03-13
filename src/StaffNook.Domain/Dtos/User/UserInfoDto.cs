@@ -12,5 +12,13 @@ public class UserInfoDto
     public Guid RoleId { get; set; }
     public string Email { get; set; }
     public DateTime DateOfBirth { get; set; }
+    public DateTime EmploymentDate { get; set; }
+    public string PhoneNumber { get; set; }
+    
+    /// <summary>
+    /// Специальность
+    /// </summary>
+    public Guid? SpecialityId { get; set; }
+    
     public FileDto Attachment { get; set; }
 }

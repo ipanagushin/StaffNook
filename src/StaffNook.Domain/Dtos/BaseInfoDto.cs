@@ -13,6 +13,11 @@ public class BaseInfoDto
     public DateTime CreatedAt { get; set; }
     
     /// <summary>
+    /// Создатель
+    /// </summary>
+    public Guid? CreatorId { get; set; }
+    
+    /// <summary>
     /// Дата обновления
     /// </summary>
     public DateTime UpdatedAt { get; set; }

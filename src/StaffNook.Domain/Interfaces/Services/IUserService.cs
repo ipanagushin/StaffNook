@@ -10,5 +10,6 @@ public interface IUserService
     Task Update(Guid id, UpdateUserDto updateUserDto, CancellationToken cancellationToken = default);
     Task<UserInfoDto> GetById(Guid userId, CancellationToken cancellationToken = default);
     Task<IEnumerable<UserInfoDto>> GetAll(CancellationToken cancellationToken = default);
-    Task<PaginationResult<UserInfoDto>> GetByPageFilter(UserPageFilter pageFilter = default, CancellationToken cancellationToken = default);
+    Task<PaginationResult<UserInfoDto>> GetAdminByPageFilter(UserPageFilter pageFilter = default, CancellationToken cancellationToken = default);
+    Task<PaginationResult<ShortUserInfoDto>> GetByPageFilter(UserPageFilter pageFilter = default, CancellationToken cancellationToken = default);
 }

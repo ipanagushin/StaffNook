@@ -98,11 +98,11 @@ public class UserService : IUserService
 
     public async Task<IEnumerable<UserInfoDto>> GetAll(CancellationToken cancellationToken = default)
     {
-        var userEntities = await _userRepository.GetList(cancellationToken);
+        var userEntities = await _userRepository.GetList(x => !x.IsArchived, cancellationToken);
         return _mapper.Map<IEnumerable<UserEntity>, IEnumerable<UserInfoDto>>(userEntities);
     }
 
-    public async Task<PaginationResult<UserInfoDto>> GetByPageFilter(UserPageFilter pageFilter = default,
+    public async Task<PaginationResult<UserInfoDto>> GetAdminByPageFilter(UserPageFilter pageFilter = default,
         CancellationToken cancellationToken = default)
     {
         var query = _userRepository.GetDataSet();
@@ -120,6 +120,57 @@ public class UserService : IUserService
         var paginationResult = new PaginationResult<UserInfoDto>()
         {
             Items = _mapper.Map<IEnumerable<UserEntity>, IEnumerable<UserInfoDto>>(response),
+            PageInfo = new PageInfo
+            {
+                TotalCount = totalCount,
+                CurrentPage = pageFilter.PageNumber,
+                TotalPageCount = totalPages
+            }
+        };
+
+        return paginationResult;
+    }
+    
+    public async Task<PaginationResult<ShortUserInfoDto>> GetByPageFilter(UserPageFilter pageFilter = default,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<UserEntity> query = _userRepository.GetDataSet();
+
+        if (pageFilter.SpecialityId.HasValue)
+        {
+            query = query.Where(x => x.SpecialityId == pageFilter.SpecialityId.Value);
+        }
+
+        // xD
+        if (!string.IsNullOrWhiteSpace(pageFilter.FullName))
+        {
+            var fullNameLower = pageFilter.FullName.ToLower();
+            query = query.Where(x => 
+                fullNameLower.Contains(x.FirstName.ToLower()) || 
+                fullNameLower.Contains(x.LastName.ToLower()) || 
+                fullNameLower.Contains(x.MiddleName.ToLower()) ||
+                x.FirstName.ToLower().Contains(fullNameLower) || 
+                x.LastName.ToLower().Contains(fullNameLower) ||
+                x.MiddleName.ToLower().Contains(fullNameLower));
+        }
+
+        if (!string.IsNullOrWhiteSpace(pageFilter.PhoneNumber))
+        {
+            query = query.Where(x => x.PhoneNumber == pageFilter.PhoneNumber);
+        }
+        
+        var totalCount = await query.CountAsync(cancellationToken);
+        var totalPages = (int)Math.Ceiling((double)totalCount / pageFilter.PageSize);
+
+        var response = await query
+            .OrderByDescending(x => x.LastName)
+            .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
+            .Take(pageFilter.PageSize)
+            .ToListAsync(cancellationToken);
+
+        var paginationResult = new PaginationResult<ShortUserInfoDto>()
+        {
+            Items = _mapper.Map<IEnumerable<UserEntity>, IEnumerable<ShortUserInfoDto>>(response),
             PageInfo = new PageInfo
             {
                 TotalCount = totalCount,

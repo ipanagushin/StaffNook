@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StaffNook.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using StaffNook.Infrastructure.Persistence;
 namespace StaffNook.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240311090918_Added_News_Entity")]
+    partial class Added_News_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,9 +226,6 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("EmploymentDate")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
@@ -256,9 +256,6 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<string>("Salt")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("SpecialityId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
 
@@ -268,38 +265,7 @@ namespace StaffNook.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("SpecialityId");
-
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("StaffNook.Domain.Entities.News.NewsEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("StaffNook.Domain.Entities.Project.ProjectContactsEntity", b =>
@@ -487,32 +453,6 @@ namespace StaffNook.Infrastructure.Migrations
                     b.ToTable("ProjectTypes");
                 });
 
-            modelBuilder.Entity("StaffNook.Domain.Entities.Reference.SpecialityEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Specialities");
-                });
-
             modelBuilder.Entity("StaffNook.Domain.Entities.Employee.WorkingTimeEntity", b =>
                 {
                     b.HasOne("StaffNook.Domain.Entities.Project.ProjectEntity", "Project")
@@ -555,15 +495,9 @@ namespace StaffNook.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StaffNook.Domain.Entities.Reference.SpecialityEntity", "Speciality")
-                        .WithMany()
-                        .HasForeignKey("SpecialityId");
-
                     b.Navigation("Attachment");
 
                     b.Navigation("Role");
-
-                    b.Navigation("Speciality");
                 });
 
             modelBuilder.Entity("StaffNook.Domain.Entities.Project.ProjectContactsEntity", b =>

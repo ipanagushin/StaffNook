@@ -48,4 +48,14 @@ public class UpdateUserDto
     /// Дата рождения
     /// </summary>
     public DateTime DateOfBirth { get; set; }
+    
+    /// <summary>
+    /// Дата приема
+    /// </summary>
+    public DateTime EmploymentDate { get; set; }
+    
+    /// <summary>
+    /// Специальность
+    /// </summary>
+    public Guid? SpecialityId { get; set; }
 }

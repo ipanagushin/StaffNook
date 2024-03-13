@@ -14,6 +14,7 @@ public class CurrentUserResponseDto
     
     public string FullName { get; set; }
     
+    public string AvatarLink { get; set; }
     // ToDo:: add avatar attachment
     // public Guid AvatarId { get; set; }
 }
