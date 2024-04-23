@@ -64,7 +64,7 @@ public class ProjectService : IProjectService
 
             await transaction.CommitAsync(cancellationToken);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             await transaction.RollbackAsync(cancellationToken);
             throw new BusinessException("Произошла ошибка при создании проекта");

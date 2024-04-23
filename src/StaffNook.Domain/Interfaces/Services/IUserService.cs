@@ -12,4 +12,5 @@ public interface IUserService
     Task<IEnumerable<UserInfoDto>> GetAll(CancellationToken cancellationToken = default);
     Task<PaginationResult<UserInfoDto>> GetAdminByPageFilter(UserPageFilter pageFilter = default, CancellationToken cancellationToken = default);
     Task<PaginationResult<ShortUserInfoDto>> GetByPageFilter(UserPageFilter pageFilter = default, CancellationToken cancellationToken = default);
+    Task<AvailableValue[]> GetAvailableValues();
 }

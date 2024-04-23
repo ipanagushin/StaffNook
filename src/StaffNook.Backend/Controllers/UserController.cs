@@ -24,7 +24,7 @@ public class UserController : ControllerBase
     /// <param name="createUserDto"></param>
     /// <returns></returns>
     [HttpPost]
-    [AuthClaim(ClaimList.CreateUser)]
+    // [AuthClaim(ClaimList.CreateUser)]
     public async Task<IActionResult> Create([FromBody] CreateUserDto createUserDto)
     {
         await _userService.Create(createUserDto);
@@ -80,5 +80,16 @@ public class UserController : ControllerBase
     public async Task<PaginationResult<ShortUserInfoDto>> GetByPageFilter([FromBody] UserPageFilter filter)
     {
         return await _userService.GetByPageFilter(filter);
+    }
+    
+    /// <summary>
+    /// Получение пользователей для выпадающего списка
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    [Route("availableValues")]
+    public async Task<AvailableValue[]> GetAvailableValues()
+    {
+        return await _userService.GetAvailableValues();
     }
 }

@@ -25,7 +25,7 @@ public class CreateProjectDto
     /// <summary>
     /// Дата окончания
     /// </summary>
-    public DateOnly EndDateDate { get; set; }
+    public DateOnly EndDate { get; set; }
     
     /// <summary>
     /// Тип проекта

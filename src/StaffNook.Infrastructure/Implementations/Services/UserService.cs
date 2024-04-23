@@ -130,7 +130,7 @@ public class UserService : IUserService
 
         return paginationResult;
     }
-    
+
     public async Task<PaginationResult<ShortUserInfoDto>> GetByPageFilter(UserPageFilter pageFilter = default,
         CancellationToken cancellationToken = default)
     {
@@ -145,11 +145,11 @@ public class UserService : IUserService
         if (!string.IsNullOrWhiteSpace(pageFilter.FullName))
         {
             var fullNameLower = pageFilter.FullName.ToLower();
-            query = query.Where(x => 
-                fullNameLower.Contains(x.FirstName.ToLower()) || 
-                fullNameLower.Contains(x.LastName.ToLower()) || 
+            query = query.Where(x =>
+                fullNameLower.Contains(x.FirstName.ToLower()) ||
+                fullNameLower.Contains(x.LastName.ToLower()) ||
                 fullNameLower.Contains(x.MiddleName.ToLower()) ||
-                x.FirstName.ToLower().Contains(fullNameLower) || 
+                x.FirstName.ToLower().Contains(fullNameLower) ||
                 x.LastName.ToLower().Contains(fullNameLower) ||
                 x.MiddleName.ToLower().Contains(fullNameLower));
         }
@@ -158,7 +158,7 @@ public class UserService : IUserService
         {
             query = query.Where(x => x.PhoneNumber == pageFilter.PhoneNumber);
         }
-        
+
         var totalCount = await query.CountAsync(cancellationToken);
         var totalPages = (int)Math.Ceiling((double)totalCount / pageFilter.PageSize);
 
@@ -180,5 +180,13 @@ public class UserService : IUserService
         };
 
         return paginationResult;
+    }
+
+    public async Task<AvailableValue[]> GetAvailableValues()
+    {
+       return await _userRepository.GetDataSet()
+            .Where(x => !x.IsArchived)
+            .Select(x => new AvailableValue(x.Id, x.FullName))
+            .ToArrayAsync();
     }
 }
