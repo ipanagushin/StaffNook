@@ -56,7 +56,7 @@ public static class ConfigureServicesContainer
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfiguration.SecurityKey))
                 };
-            }).AddScheme<AppAuthenticationSchemeOptions, AuthHandler>("StaffNook", _ => {});;
+            }).AddScheme<AppAuthenticationSchemeOptions, AuthHandler>("StaffNook", _ => {});
     }
 
     public static void ConfigureDependencyContainer(this IServiceCollection services, IConfiguration configuration)

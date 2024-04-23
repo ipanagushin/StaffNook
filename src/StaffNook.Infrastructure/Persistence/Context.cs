@@ -46,7 +46,7 @@ public class Context : DbContext
 
         modelBuilder.Entity<WorkingTimeEntity>()
             .HasIndex(x => new { x.Id, x.UserId }).IsUnique();
-
+        
     }
 
 }

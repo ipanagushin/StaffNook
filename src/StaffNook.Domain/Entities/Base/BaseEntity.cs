@@ -13,8 +13,6 @@ public class BaseEntity
     public DateTime CreatedAt { get; set; }
 
     public Guid? CreatorId { get; set; }
-    [NotMapped]
-    public virtual UserEntity Creator { get; set; }
 
     public bool IsArchived { get; set; }
 

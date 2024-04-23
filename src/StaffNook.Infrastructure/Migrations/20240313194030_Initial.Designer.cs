@@ -12,8 +12,8 @@ using StaffNook.Infrastructure.Persistence;
 namespace StaffNook.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240311205744_Enrich_User")]
-    partial class Enrich_User
+    [Migration("20240313194030_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

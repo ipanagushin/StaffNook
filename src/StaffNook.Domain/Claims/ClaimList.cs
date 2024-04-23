@@ -20,6 +20,15 @@ public static class ClaimList
     [Display(Name = "Удаление новости")]
     public const string DeleteNews = nameof(DeleteNews);
     
+    [Display(Name = "Создание клиента")]
+    public const string CreateClient = nameof(CreateClient);
+    
+    [Display(Name = "Обновление клиента")]
+    public const string UpdateClient = nameof(UpdateClient);
+    
+    [Display(Name = "Удаление клиента")]
+    public const string DeleteClient = nameof(DeleteClient);
+    
     public static Dictionary<string, string> AllClaimsDictionary = typeof(ClaimList).GetFields()
         .ToDictionary(x => x.Name, x => x.GetCustomAttribute<DisplayAttribute>()?.Name);
 
@@ -41,12 +50,20 @@ public static class GroupedClaims
         ClaimList.DeleteNews
     };
     
+    private static string[] ClientClaims = new[]
+    {
+        ClaimList.CreateClient,
+        ClaimList.UpdateClient,
+        ClaimList.DeleteClient
+    };
+    
     public static IEnumerable<ClaimsGroup> GetAllGroupedClaims()
     {
         return new[]
         {
             new ClaimsGroup("Пользователи", GetClaimDescriptionByKeys(UserClaims)),
-            new ClaimsGroup("Новости", GetClaimDescriptionByKeys(NewsClaims))
+            new ClaimsGroup("Новости", GetClaimDescriptionByKeys(NewsClaims)),
+            new ClaimsGroup("Клиенты", GetClaimDescriptionByKeys(ClientClaims))
         };
     }
     

@@ -12,8 +12,8 @@ using StaffNook.Infrastructure.Persistence;
 namespace StaffNook.Infrastructure.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240311093645_Fix_News")]
-    partial class Fix_News
+    [Migration("20240314220908_Fix_name_field")]
+    partial class Fix_name_field
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -226,6 +226,9 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("EmploymentDate")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
@@ -256,6 +259,9 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<string>("Salt")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("SpecialityId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
 
@@ -264,6 +270,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.HasIndex("AttachmentId");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("SpecialityId");
 
                     b.ToTable("User");
                 });
@@ -390,7 +398,7 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("EndDateDate")
+                    b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsArchived")
@@ -482,6 +490,32 @@ namespace StaffNook.Infrastructure.Migrations
                     b.ToTable("ProjectTypes");
                 });
 
+            modelBuilder.Entity("StaffNook.Domain.Entities.Reference.SpecialityEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Specialities");
+                });
+
             modelBuilder.Entity("StaffNook.Domain.Entities.Employee.WorkingTimeEntity", b =>
                 {
                     b.HasOne("StaffNook.Domain.Entities.Project.ProjectEntity", "Project")
@@ -524,9 +558,15 @@ namespace StaffNook.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("StaffNook.Domain.Entities.Reference.SpecialityEntity", "Speciality")
+                        .WithMany()
+                        .HasForeignKey("SpecialityId");
+
                     b.Navigation("Attachment");
 
                     b.Navigation("Role");
+
+                    b.Navigation("Speciality");
                 });
 
             modelBuilder.Entity("StaffNook.Domain.Entities.Project.ProjectContactsEntity", b =>
@@ -597,7 +637,7 @@ namespace StaffNook.Infrastructure.Migrations
             modelBuilder.Entity("StaffNook.Domain.Entities.Project.ProjectRoleEntity", b =>
                 {
                     b.HasOne("StaffNook.Domain.Entities.Project.ProjectEntity", "Project")
-                        .WithMany()
+                        .WithMany("ProjectRoles")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -625,6 +665,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Navigation("ProjectContacts");
 
                     b.Navigation("ProjectEmployees");
+
+                    b.Navigation("ProjectRoles");
                 });
 #pragma warning restore 612, 618
         }

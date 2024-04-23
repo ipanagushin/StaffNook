@@ -6,4 +6,5 @@ namespace StaffNook.Domain.Common;
 public enum ReferenceType
 {
     Speciality = 0,
+    ProjectType = 1,
 }

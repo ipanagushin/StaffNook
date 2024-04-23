@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using StaffNook.Domain.Entities.Base;
 using StaffNook.Domain.Interfaces.Repositories;
 using StaffNook.Domain.Interfaces.Services.Identity;
@@ -38,11 +39,23 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     public async Task<TEntity> Insert(TEntity data, CancellationToken cancellationToken = default)
     {
         data.CreatedAt = DateTime.UtcNow;
-        data.CreatorId = _currentUserService.User.Id;
+        data.CreatorId = _currentUserService.User?.Id;
         
         var result =  await GetDataSet().AddAsync(data, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         return result.Entity;
+    }
+    
+    public async Task InsertMany(TEntity[] dataList, CancellationToken cancellationToken = default)
+    {
+        foreach (var data in dataList)
+        {
+            data.CreatedAt = DateTime.UtcNow;
+            data.CreatorId = _currentUserService.User?.Id;
+        }
+        
+        await GetDataSet().AddRangeAsync(dataList, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<TEntity> Update(TEntity data, CancellationToken cancellationToken = default)
@@ -73,6 +86,11 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
         entity.IsArchived = true;
 
         await Update(entity, cancellationToken);
+    }
+
+    public IDbContextTransaction BeginTransaction()
+    {
+        return _context.Database.BeginTransaction();
     }
 
     public DbSet<TEntity> GetDataSet()

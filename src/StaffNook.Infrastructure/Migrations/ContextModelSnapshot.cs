@@ -395,7 +395,7 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Property<Guid?>("CreatorId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("EndDateDate")
+                    b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsArchived")
@@ -634,7 +634,7 @@ namespace StaffNook.Infrastructure.Migrations
             modelBuilder.Entity("StaffNook.Domain.Entities.Project.ProjectRoleEntity", b =>
                 {
                     b.HasOne("StaffNook.Domain.Entities.Project.ProjectEntity", "Project")
-                        .WithMany()
+                        .WithMany("ProjectRoles")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -662,6 +662,8 @@ namespace StaffNook.Infrastructure.Migrations
                     b.Navigation("ProjectContacts");
 
                     b.Navigation("ProjectEmployees");
+
+                    b.Navigation("ProjectRoles");
                 });
 #pragma warning restore 612, 618
         }

@@ -36,7 +36,7 @@ public class ProjectEntity : BaseEntity
     /// <summary>
     /// Дата окончания
     /// </summary>
-    public DateOnly EndDateDate { get; set; }
+    public DateOnly EndDate { get; set; }
     
     /// <summary>
     /// Тип проекта
@@ -53,4 +53,9 @@ public class ProjectEntity : BaseEntity
     /// Контакты проекта
     /// </summary>
     public virtual ICollection<ProjectContactsEntity> ProjectContacts { get; set; }
+    
+    /// <summary>
+    /// Роли проекта
+    /// </summary>
+    public virtual ICollection<ProjectRoleEntity> ProjectRoles { get; set; }
 }
