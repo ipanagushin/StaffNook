@@ -15,6 +15,7 @@ public class ProjectService : IProjectService
     private readonly IProjectRepository _projectRepository;
     private readonly IProjectContactsRepository _projectContactsRepository;
     private readonly IProjectRoleRepository _projectRoleRepository;
+    private readonly IProjectEmployeeRepository _projectEmployeeRepository;
     private readonly IMapper _mapper;
     
 
@@ -22,12 +23,14 @@ public class ProjectService : IProjectService
         IProjectRepository projectRepository, 
         IProjectContactsRepository projectContactsRepository, 
         IProjectRoleRepository projectRoleRepository, 
-        IMapper mapper)
+        IMapper mapper, 
+        IProjectEmployeeRepository projectEmployeeRepository)
     {
         _projectRepository = projectRepository;
         _projectContactsRepository = projectContactsRepository;
         _projectRoleRepository = projectRoleRepository;
         _mapper = mapper;
+        _projectEmployeeRepository = projectEmployeeRepository;
     }
 
     public async Task CreateProject(CreateProjectDto createProjectDto, CancellationToken cancellationToken = default)
@@ -102,5 +105,41 @@ public class ProjectService : IProjectService
         };
 
         return paginationResult;
+    }
+
+    public async Task UpdateProjectEmployees(Guid projectId, IEnumerable<ProjectEmployeeDto> projectEmployees,
+        CancellationToken cancellationToken = default)
+    {
+        await using var transaction = _projectEmployeeRepository.BeginTransaction();
+        
+        try
+        {
+            var projectEmployeeEntities = _projectEmployeeRepository.GetDataSet().Where(x => x.ProjectId == projectId);
+
+            foreach (var projectEmployeeDto in projectEmployees)
+            {
+                var existingEntity = projectEmployeeEntities.FirstOrDefault(e => e.UserId == projectEmployeeDto.UserId);
+
+                if (existingEntity != null)
+                {
+                    existingEntity.ProjectRoleId = projectEmployeeDto.ProjectRoleId;
+                    await _projectEmployeeRepository.Update(existingEntity, cancellationToken);
+                }
+                else
+                {
+                    var newEntity = _mapper.Map<ProjectEmployeeEntity>(projectEmployeeDto);
+                    newEntity.ProjectId = projectId;
+                    await _projectEmployeeRepository.Insert(newEntity, cancellationToken);
+                }
+            }
+            
+            await transaction.CommitAsync(cancellationToken);
+        }
+        catch (Exception e)
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            throw new BusinessException("Произошла ошибка при редактировании сотрудников в проекте");
+        }
+
     }
 }
